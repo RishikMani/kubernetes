@@ -52,3 +52,5 @@ learning-control-plane   Ready    control-plane   3d9h   v1.33.12
 ```
 
 The name of our node is `learning-control-plane` and is in ready status.
+
+> NOTE: Please note that all the commands would be executed from the root directory of the project.
