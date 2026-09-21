@@ -54,3 +54,11 @@ learning-control-plane   Ready    control-plane   3d9h   v1.33.12
 The name of our node is `learning-control-plane` and is in ready status.
 
 > NOTE: Please note that all the commands would be executed from the root directory of the project.
+
+As all the development is carried out in the namespace `development`, you will always have to include the namespace in the commands `-n development`, else you might get not found error.
+
+To avoid this set `development` as the default namespace for our current `kubectl context`.
+
+```bash
+kubectl config set-context --current --namespace=development
+```
