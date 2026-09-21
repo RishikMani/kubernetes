@@ -59,9 +59,27 @@ kubectl apply -f configurations/01_deployment/deployment.yaml
 List all the pods:
 
 ```bash
-kubectl get pods -n development -w
+kubectl get pods -w
 ```
 
 When the `Pods` are being created the status would should as `ContainerCreating`. The `-w` activates a watch and once the container status changes to `Running`, exit the command. All the pods will have a names starting with `web-` with random IDs assigned.
 
 With the `Pods` in place it is time to create a `Service` to interact with the `Pods`.
+
+## Scaling the application
+
+When we created the `Deployment` it created three `Pods` as mentioned in
+
+```yaml
+spec:
+  replicas: 3
+```
+
+Now if we forcefully delete a `Pod` to simulate real life crash, one more replica gets started to maintain the `Pod` count as 3.
+
+```bash
+kubectl delete pod web-6c79984869-8cc5k
+kubectl get pods
+```
+
+Now if there are other Kubernetes components that are linked to `Pods`, like a `Service`, that too updates to reflect the changes.
