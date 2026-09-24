@@ -106,7 +106,7 @@ spec:
             name: web-content
 ```
 
-Inside `volumeMounts` we attach the volume to the container. We then mount only the index file (`subPath`) rather than the entire volume. Finally we define the `volumes` to explicitly tell where the data comes from. This `volume` the selects the `ConfigMap` named `web-content`. If you remember, `web-content` was the name of our `ConfigMap` at the time of creation.
+Inside `volumeMounts` we attach the volume to the container. We then mount only the index file (`subPath`) rather than the entire volume. Finally, we define the `volumes` to explicitly tell where the data comes from. This `volume` the selects the `ConfigMap` named `web-content`. If you remember, `web-content` was the name of our `ConfigMap` at the time of creation.
 
 With this we are again ready to test the default response from NGINX. To temporarily interact with the service we could port forward as it creates a tunnel from a port on our localhost to the port in the cluster.
 
