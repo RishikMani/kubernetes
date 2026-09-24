@@ -25,7 +25,7 @@ NAME   TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
 web    NodePort   10.96.2.129   <none>        80:31290/TCP   6d11h
 ```
 
-To temporarily interact with the service we could port forward as it creates a tunnel from a port on our localhost to the port in the cluster. Foe example:
+To temporarily interact with the service we could port forward as it creates a tunnel from a port on our localhost to the port in the cluster. For example:
 
 ```bash
 kubectl port-forward service/web 8080:80
