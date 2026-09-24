@@ -83,3 +83,38 @@ kubectl get pods
 ```
 
 Now if there are other Kubernetes components that are linked to `Pods`, like a `Service`, that too updates to reflect the changes.
+
+## Add ConfigMap details
+
+Once the file `configurations/03_configmap/configmap.yaml` is created and applied, we need to add the details to our `Deployment` else the changes will not be reflected. In `deployment.yaml` we modified `spec.template.spec.containers` and `spec.template.spec` sections and added volume related sections as follows:
+
+```yaml
+spec:
+  ...
+  template:
+    ...
+    spec:
+      containers:
+        ...
+        volumeMounts:
+          - name: config-content
+            mountPath: /usr/share/nginx/html/index.html
+            subPath: index.html
+      volumes:
+        - name: config-content
+          configMap:
+            name: web-content
+```
+
+Inside `volumeMounts` we attach the volume to the container. We then mount only the index file (`subPath`) rather than the entire volume. Finally, we define the `volumes` to explicitly tell where the data comes from. This `volume` the selects the `ConfigMap` named `web-content`. If you remember, `web-content` was the name of our `ConfigMap` at the time of creation.
+
+With this we are again ready to test the default response from NGINX. To temporarily interact with the service we could port forward as it creates a tunnel from a port on our localhost to the port in the cluster.
+
+```bash
+kubectl port-forward svc/web 8080:80
+curl http://localhost:8080
+```
+
+The output HTML body should now say "Hello from Kubernetes".
+
+Let's now jump to `Secrets`.
