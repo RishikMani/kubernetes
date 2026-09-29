@@ -70,3 +70,31 @@ env:
         name: database-credentials
         key: DB_PASSWORD
 ```
+
+After the secret has been applied, you can verify it:
+
+```bash
+kubectl get secret app-secret
+```
+
+The above command will show you the `Secret` created along with its `Type`. Or for a little more detailed information, you can run:
+
+```bash
+kubectl describe secret app-secret
+```
+
+The output displays:
+
+```
+Name:         app-secret
+Namespace:    development
+Labels:       app.kubernetes.io/managed-by=Helm
+Annotations:  meta.helm.sh/release-name: web
+              meta.helm.sh/release-namespace: development
+
+Type:  Opaque
+
+Data
+====
+API_KEY:  12 bytes
+```
