@@ -13,6 +13,29 @@ There are different `accessModes` available.
 
 Once the volumes have been applied we need to modify our `Deployment`. This will create `volumeMounts` and `volumes` in our containers. If our `Pod` crashes now and a new `Pod` spawns, the data would be retained between the different `Pods`.
 
+Verify that the `PVC` got created:
+
+```bash
+kubectl get pvc web-pvc
+```
+
+It shows that the `PVC` `web-pvc` has a `Volume` `web-pv` defined. I was expecting that the volume name should be `persistent-data`. But `persistent-data` is rather part of the `Deployment` and is not the name of our `Storage` which is actually defined in `volume.yaml`.
+
+```
+NAME      STATUS   VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+web-pvc   Bound    web-pv   1Gi        RWO            manual         <unset>                 17d
+```
+
+Also verify the `PersistentVolume` created:
+
+```yaml
+kubectl get pv web-pv
+```
+
+The output would show the `CLAIM` to be `development/web-pvc`.
+
+Once the storage related changes have been applied we will add them to the deployment as defined follows.
+
 ```yaml
 volumes:
   - name: persistent-data
@@ -31,3 +54,4 @@ volumeMounts:
 Remember, that `ConfigMap` is not copied into each `Pod` but every `Pod` can independently mount and read the same `ConfigMap`. That is suitable for configurations. A `PersistentVolume` is for data that the applications create or modify and that can survive `Pod` replacement.
 
 Currently, our `ConfigMap` modifies the `index.html` and would override the default output for `nginx`. This configuration can be applied to multiple pods. But, if we have an application where a user uploads photo, and if the pod crashes, the uploaded data would be lost. So having a `PV` would make it persistent and it will survive pod crashes.
+
