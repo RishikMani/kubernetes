@@ -25,6 +25,12 @@ spec:
             # This is a PersistentVolume.
             - name: persistent-data
               mountPath: /usr/share/nginx/html/data
+          env:
+          - name: API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: app-secret
+                key: API_KEY
       volumes:
         - name: config-content
           configMap:
