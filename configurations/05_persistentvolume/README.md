@@ -28,7 +28,7 @@ web-pvc   Bound    web-pv   1Gi        RWO            manual         <unset>    
 
 Also verify the `PersistentVolume` created:
 
-```yaml
+```bash
 kubectl get pv web-pv
 ```
 
@@ -54,4 +54,3 @@ volumeMounts:
 Remember, that `ConfigMap` is not copied into each `Pod` but every `Pod` can independently mount and read the same `ConfigMap`. That is suitable for configurations. A `PersistentVolume` is for data that the applications create or modify and that can survive `Pod` replacement.
 
 Currently, our `ConfigMap` modifies the `index.html` and would override the default output for `nginx`. This configuration can be applied to multiple pods. But, if we have an application where a user uploads photo, and if the pod crashes, the uploaded data would be lost. So having a `PV` would make it persistent and it will survive pod crashes.
-
