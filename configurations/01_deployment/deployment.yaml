@@ -22,6 +22,9 @@ spec:
             - name: config-content
               mountPath: /usr/share/nginx/html/index.html
               subPath: index.html
+            # This is a PersistentVolume.
+            - name: persistent-data
+              mountPath: /usr/share/nginx/html/data
           env:
           - name: API_KEY
             valueFrom:
@@ -32,3 +35,7 @@ spec:
         - name: config-content
           configMap:
             name: web-content
+        # This is a PersistentVolumeClaim.
+        - name: persistent-data
+          persistentVolumeClaim:
+            claimName: web-pvc

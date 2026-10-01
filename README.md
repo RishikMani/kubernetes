@@ -62,3 +62,30 @@ To avoid this set `development` as the default namespace for our current `kubect
 ```bash
 kubectl config set-context --current --namespace=development
 ```
+
+## What is a namespace?
+
+Namespaces help separate Kubernetes resources into logical environments such as development, testing and production. A namespace can be created as
+
+```bash
+kubectl create namespace development
+```
+
+For our Kubernetes cluster before we created the `development` namespace we had many existing namespaces. These namespaces get created by default when a cluster node is setup.
+
+```bash
+NAME                 STATUS   AGE
+default              Active   11h
+kube-node-lease      Active   11h
+kube-public          Active   11h
+kube-system          Active   11h
+local-path-storage   Active   11h
+```
+
+As in the previous section executing
+
+```bash
+kubectl config set-context --current --namespace=development
+```
+
+sets our active namespace to be `development`. This way we need not provide the namespace flag in every command.
