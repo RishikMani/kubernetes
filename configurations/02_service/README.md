@@ -84,3 +84,38 @@ spec:
 ```
 
 The `Service` uses this selector to find matching `Pods` with app label `web` (`app=web`).
+
+## What is a `NodePort`?
+
+Let's first check the following:
+
+```bash
+kubectl get service web -n development
+```
+
+The output:
+
+```
+NAME   TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
+web    NodePort   10.96.2.129   <none>        80:31290/TCP   21d
+```
+
+Here `80` is the `Service` port and `31290` is the `NodePort`.
+
+With a `NodePort` `Service`, Kubernetes exposes the `Service` on each Kubernetes node at the specified port:
+
+Kubernetes node:31290 → Service → Pods
+
+In a traditional VM or cloud-based Kubernetes cluster, the node usually has an IP address that is reachable from outside the cluster, so clients can access the NodePort through the node's IP.
+
+In a kind cluster, however, the Kubernetes nodes are themselves Docker containers:
+
+localhost (host) → Docker container (Kubernetes node) → NodePort → Service → Pods
+
+The `NodePort` is therefore available inside/on the Docker network and on the node container, but Docker does not necessarily publish that port from the node container to the host's localhost.
+
+To access the `NodePort` through localhost:31290 on the host, the port needs to be explicitly mapped/published when creating the kind cluster, for example:
+
+host:31290 → kind node:31290 → Service → Pods
+
+The important distinction is that the NodePort exists and is working, but the host may have no network path to the Kubernetes node's NodePort unless Docker publishes that port.
