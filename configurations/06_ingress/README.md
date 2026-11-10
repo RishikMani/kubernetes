@@ -6,7 +6,7 @@ Here is a simple example where an `Ingress` sends all its traffic to one `Servic
 
 ![Ingress](ingress.png)
 
-You must have an `Ingress` controller to satisfy an `Ingress`. Only creating an Ingress resource has no effect.  There are a number of [ingress controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/) to choose from. For our tutorial we will be using [NGINX Ingress Controller for Kubernetes](https://www.nginx.com/products/nginx-ingress-controller/). It works with an NGINX webserver..
+You must have an `Ingress` controller to satisfy an `Ingress`. Only creating an Ingress resource has no effect. There are a number of [ingress controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/) to choose from. For our tutorial we will be using [NGINX Ingress Controller for Kubernetes](https://www.nginx.com/products/nginx-ingress-controller/). It works with an NGINX webserver.
 
 An `Ingress` needs `apiVersion`, `kind`, `metadata` and `spec` fields. The `Ingress` `spec` has all the information needed to configure a load balancer or proxy server. Most importantly, it contains a list of rules matched against all incoming requests. Ingress resource only supports rules for directing HTTP(S) traffic.
 
